@@ -6,7 +6,7 @@ import { songsdata } from "./Player/audios";
 const App = () => {
   const [songs, setSongs] = useState(songsdata);
   const [isplaying, setisplaying] = useState(false);
-  const [currentSong, setCurrentsong] = useState(songsdata[0]);
+  const [currentSong, setCurrentSong] = useState(songsdata[0]);
   const audioElem = useRef();
 
   useEffect(() => {
@@ -16,6 +16,11 @@ const App = () => {
       audioElem.current.pause();
     }
   }, [isplaying]);
+
+
+  useEffect(() => {
+    audioElem.current.src = currentSong.url;
+}, [currentSong])
 
 
 
@@ -29,6 +34,7 @@ const App = () => {
         setisplaying={setisplaying}
         audioElem={audioElem}
         currentSong = {currentSong}
+        setCurrentSong={setCurrentSong}
       />
     </div>
   );
