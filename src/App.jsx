@@ -1,28 +1,37 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./App.css";
 import Player from "./Player/Player";
-import { songsdata } from "./Player/audios";
 
 const App = () => {
-  const [songs, setSongs] = useState(songsdata);
+  const [songs, setSongs] = useState(null);
   const [isplaying, setisplaying] = useState(false);
-  const [currentSong, setCurrentSong] = useState(songsdata[0]);
+  const [currentSong, setCurrentSong] = useState([]);
   const audioElem = useRef();
 
   useEffect(() => {
-    if(isplaying){
+    fetch("https://playground.4geeks.com/apis/fake/sound/songs")
+
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data)
+        setSongs(data);
+        setCurrentSong(data[0]);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  useEffect(() => {
+    if (isplaying) {
       audioElem.current.play();
     } else {
       audioElem.current.pause();
     }
   }, [isplaying]);
 
-
   useEffect(() => {
-    audioElem.current.src = currentSong.url;
-}, [currentSong])
+    audioElem.current.src = "https://assets.breatheco.de/apis/sound/" + currentSong.url;
 
-
+  }, [currentSong]);
 
   return (
     <div className="App">
@@ -33,7 +42,7 @@ const App = () => {
         isplaying={isplaying}
         setisplaying={setisplaying}
         audioElem={audioElem}
-        currentSong = {currentSong}
+        currentSong={currentSong}
         setCurrentSong={setCurrentSong}
       />
     </div>

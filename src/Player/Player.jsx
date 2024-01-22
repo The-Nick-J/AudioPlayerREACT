@@ -23,7 +23,7 @@ const Player = ({
   };
 
   const skipBack = () => {
-    const index = songs.findIndex(x => x.name == currentSong.name);
+    const index = songs.findIndex(x => x == currentSong);
 
     if (index == 0) {
       setCurrentSong(songs[songs.length - 1]);
@@ -34,15 +34,12 @@ const Player = ({
   };
 
   const skipToNext = () => {
-    const index = songs.findIndex(x => x.name == currentSong.name);
+    const index = songs.findIndex(x => x === currentSong);
+      const nextIndex = (index + 1) % songs.length;
+      setCurrentSong(songs[nextIndex])
+      setisplaying(false);
 
-    if (index == songs.length - 1) {
-      setCurrentSong(songs[0]);
-    } else {
-      setCurrentSong(songs[index + 1])
-    }
 
-    setisplaying(false);
 
   };
 
