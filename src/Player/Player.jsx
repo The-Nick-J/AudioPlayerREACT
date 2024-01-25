@@ -18,6 +18,11 @@ const Player = ({
 }) => {
 
 
+  const playSong = (song) => {
+    setCurrentSong(song);
+    setisplaying(false);
+  };
+
   const PlayPause = () => {
     setisplaying(!isplaying);
   };
@@ -65,6 +70,13 @@ const Player = ({
         )}
         <BsFillSkipEndCircleFill className="btn_action" onClick={skipToNext}/>
       </div>
+      <div className="song_list">
+        {songs && songs.map((song, index) =>(
+          <div key={index} className="song_item" onClick={() => playSong(song)}>
+            {song.name}
+        </div>
+        ))}
+    </div>
     </div>
   );
 };
