@@ -17,6 +17,8 @@ const Player = ({
   songs,
 }) => {
 
+  const [volume, setVolume] = React.useState(0.5);
+
 
   const playSong = (song) => {
     setCurrentSong(song);
@@ -48,6 +50,11 @@ const Player = ({
 
   };
 
+  const  handleVolumeChange = (e) => {
+    setVolume(e.target.value);
+    audioElem.current.volume = e.target.value;
+  };
+
   return (
     <div className="player_container">
       <div className="title">
@@ -70,6 +77,15 @@ const Player = ({
         )}
         <BsFillSkipEndCircleFill className="btn_action" onClick={skipToNext}/>
       </div>
+      <input 
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value={volume}
+          onChange={handleVolumeChange}
+          className="volume_slider"
+        />
       <div className="song_list">
         {songs && songs.map((song, index) =>(
           <div key={index} className="song_item" onClick={() => playSong(song)}>
